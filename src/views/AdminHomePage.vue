@@ -7,7 +7,10 @@
 						<v-avatar size="60">
 							<img src="../assets/cor-jesu-college-logo.jpg" alt="" />
 						</v-avatar>
-						<div class="adminName">Admin</div>
+						<div class="nameCon">
+							<div class="name">Mark Rey Ronolo</div>
+							<div class="role">Administrator</div>
+						</div>
 					</div>
 					<div class="navigations">
 						<div class="btnCon">
@@ -120,10 +123,17 @@
 		align-items: center;
 	}
 
-	.adminName {
+	.nameCon {
+		text-align: left;
 		padding: 0px 20px;
-		font-size: 18px;
-		font-weight: 500;
+	}
+
+	.name {
+		font-weight: bold;
+	}
+
+	.role {
+		font-size: 12px;
 	}
 
 	.mainContent {

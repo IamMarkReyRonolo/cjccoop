@@ -13,17 +13,17 @@
 				>
 			</div>
 			<div class="options">
-				<v-btn text block class="option">
+				<v-btn text block class="option" large>
 					<v-icon>mdi-face-recognition</v-icon>
 					<div class="optionName">Change Profile Picture</div>
 				</v-btn>
 
-				<v-btn text block class="option">
+				<v-btn text block class="option" large>
 					<v-icon>mdi-rename-box</v-icon>
 					<div class="optionName">Change Username</div>
 				</v-btn>
 
-				<v-btn text block class="option">
+				<v-btn text block class="option" large>
 					<v-icon>mdi-form-textbox-password</v-icon>
 					<div class="optionName">Change Password</div>
 				</v-btn>
