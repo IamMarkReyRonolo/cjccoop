@@ -26,15 +26,13 @@
 						</div>
 						<div class="btnCon">
 							<v-btn
-								:color="current_route == 'addMember' ? 'success' : 'black'"
-								:dark="current_route != 'addMember'"
-								:text="current_route != 'addMember'"
+								:color="current_route == 'members' ? 'success' : 'black'"
+								:dark="current_route != 'members'"
+								:text="current_route != 'members'"
 								block
 								large
-								@click="navigate('addMember')"
-								><span style="text-transform: capitalize"
-									>Add new member
-								</span></v-btn
+								@click="navigate('members')"
+								><span style="text-transform: capitalize">Members </span></v-btn
 							>
 						</div>
 						<div class="btnCon">
@@ -69,7 +67,7 @@
 			</div>
 
 			<Dashboard v-if="current_route == 'dashboard'" />
-			<AddMember v-if="current_route == 'addMember'" />
+			<Members v-if="current_route == 'members'" />
 			<Settings v-if="current_route == 'settings'" />
 		</div>
 
@@ -83,11 +81,11 @@
 
 <script>
 	import Dashboard from "../components/AdminPageComponents/Dashboard.vue";
-	import AddMember from "../components/AdminPageComponents/AddMember.vue";
+	import Members from "../components/AdminPageComponents/Members.vue";
 	import Settings from "../components/AdminPageComponents/Settings.vue";
 	import LogOut from "../components/AdminPageComponents/LogOut.vue";
 	export default {
-		components: { LogOut, Dashboard, AddMember, Settings },
+		components: { LogOut, Dashboard, Members, Settings },
 		data: () => ({
 			drawer: null,
 			clickedLogOut: false,
