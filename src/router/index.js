@@ -2,6 +2,7 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import LogInPage from "../views/LogInPage.vue";
 import MemberHome from "../views/MemberHome.vue";
+import CreditCommittee from "../views/CreditCommittee.vue";
 import AdminHomePage from "../views/AdminHomePage.vue";
 
 Vue.use(VueRouter);
@@ -16,6 +17,11 @@ const routes = [
 		path: "/member",
 		name: "MemberHome",
 		component: MemberHome,
+	},
+	{
+		path: "/credit_committee",
+		name: "CreditCommittee",
+		component: CreditCommittee,
 	},
 	{
 		path: "/admin",
