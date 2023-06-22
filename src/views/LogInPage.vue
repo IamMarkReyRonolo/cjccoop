@@ -15,14 +15,16 @@
 					filled
 					color="#78C66B"
 					dense
+					v-model="role"
 				></v-select>
 			</div>
 
 			<div class="formFields">
 				<v-text-field
-					label="Email"
+					label="Username"
 					outlined
 					color="#78C66B"
+					v-model="username"
 					:rules="usernameRules"
 				></v-text-field>
 				<v-text-field
@@ -32,27 +34,141 @@
 					:rules="passwordRules"
 					:append-icon="show ? 'mdi-eye' : 'mdi-eye-off'"
 					:type="show ? 'text' : 'password'"
+					v-model="password"
 					@click:append="show = !show"
 				></v-text-field>
-				<v-btn color="success" dark large block>Log in</v-btn>
+				<v-btn
+					:disabled="!validated"
+					color="success"
+					:dark="validated"
+					large
+					block
+					@click="login()"
+					:loading="loading"
+					>Log in</v-btn
+				>
 			</div>
 		</div>
 	</div>
 </template>
 
 <script>
+	import AdminAPI from "../apis/AdminAPI";
+	import CreditComAPI from "../apis/CreditComAPI";
+	import MemberAPI from "../apis/MemberAPI";
 	export default {
 		name: "Home",
 		components: {},
 		data: () => ({
+			loading: false,
+			fetched: false,
+			error: false,
 			show: false,
-			roles: ["User", "Admin", "Credit Committee"],
-			usernameRules: [
-				(v) => !!v.trim() || "This field is required",
-				(v) => /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v) || "Email must be valid",
-			],
+			username: "",
+			password: "",
+			role: "",
+			roles: ["Member", "Admin", "Credit Committee"],
+			usernameRules: [(v) => !!v.trim() || "This field is required"],
 			passwordRules: [(v) => !!v || "This field is required"],
 		}),
+
+		created() {
+			try {
+				const token = JSON.parse(localStorage.getItem("token"));
+				const role = JSON.parse(localStorage.getItem("role"));
+				if (token != "" && role != "") {
+					if (role == "Admin") {
+						this.$router.push("/admin");
+					}
+
+					if (role == "Member") {
+						this.$router.push("/member");
+					}
+
+					if (role == "Credit Committee") {
+						this.$router.push("/credit_committeess");
+					}
+				}
+			} catch (error) {
+				localStorage.removeItem("token");
+				localStorage.removeItem("role");
+			}
+		},
+
+		methods: {
+			async login() {
+				const credentials = {
+					username: this.username,
+					password: this.password,
+				};
+				this.loading = true;
+				try {
+					if (this.role == "Admin") {
+						const result = await AdminAPI.prototype.login(credentials);
+						localStorage.setItem(
+							"token",
+							JSON.stringify(result.data.access_token)
+						);
+						localStorage.setItem("role", JSON.stringify(this.role));
+						try {
+							const token = JSON.parse(localStorage.getItem("token"));
+							if (token) {
+								this.$router.push("/admin");
+							}
+						} catch (error) {
+							localStorage.removeItem("token");
+						}
+					}
+					if (this.role == "Member") {
+						const result = await MemberAPI.prototype.login(credentials);
+						localStorage.setItem(
+							"token",
+							JSON.stringify(result.data.access_token)
+						);
+						localStorage.setItem("role", JSON.stringify(this.role));
+						try {
+							const token = JSON.parse(localStorage.getItem("token"));
+							if (token) {
+								this.$router.push("/member");
+							}
+						} catch (error) {
+							localStorage.removeItem("token");
+						}
+					}
+					if (this.role == "Credit Committee") {
+						const result = await CreditComAPI.prototype.login(credentials);
+						localStorage.setItem(
+							"token",
+							JSON.stringify(result.data.access_token)
+						);
+						localStorage.setItem("role", JSON.stringify(this.role));
+						try {
+							const token = JSON.parse(localStorage.getItem("token"));
+							if (token) {
+								this.$router.push("/credit_committee");
+							}
+						} catch (error) {
+							localStorage.removeItem("token");
+						}
+					}
+				} catch (error) {
+					this.error = true;
+					this.loading = false;
+				}
+			},
+		},
+		computed: {
+			validated: function () {
+				if (
+					this.role != "" &&
+					this.username.trim() != "" &&
+					this.password != ""
+				) {
+					return true;
+				}
+				return false;
+			},
+		},
 	};
 </script>
 
