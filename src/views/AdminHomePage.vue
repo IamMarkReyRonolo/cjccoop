@@ -78,6 +78,7 @@
 			v-if="clickedLogOut"
 			:clickedLogOut="clickedLogOut"
 			@cancelLogOut="clickedLogOut = false"
+			@proceedLogOut="proceedLogOut()"
 		/>
 	</v-app>
 </template>
@@ -95,9 +96,39 @@
 			current_route: "dashboard",
 		}),
 
+		created() {
+			try {
+				const token = JSON.parse(localStorage.getItem("token"));
+				const role = JSON.parse(localStorage.getItem("role"));
+				if (token != "" && role != "") {
+					if (role == "Member") {
+						this.$router.push("/member");
+					}
+
+					if (role == "Credit Committee") {
+						this.$router.push("/credit_committee");
+					}
+				} else {
+					localStorage.removeItem("token");
+					localStorage.removeItem("role");
+					this.$router.push("/");
+				}
+			} catch (error) {
+				localStorage.removeItem("token");
+				localStorage.removeItem("role");
+				this.$router.push("/");
+			}
+		},
+
 		methods: {
 			navigate(route) {
 				this.current_route = route;
+			},
+
+			proceedLogOut() {
+				localStorage.removeItem("token");
+				localStorage.removeItem("role");
+				this.$router.push("/");
 			},
 		},
 	};

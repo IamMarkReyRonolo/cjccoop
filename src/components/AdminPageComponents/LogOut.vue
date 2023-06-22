@@ -14,7 +14,7 @@
 					<v-btn
 						color="success"
 						dark
-						@click="$emit('proceedSubmission')"
+						@click="$emit('proceedLogOut')"
 						id="proceedSubmitBtn"
 					>
 						<span style="text-transform: capitalize">Log out</span>

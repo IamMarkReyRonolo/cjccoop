@@ -86,7 +86,7 @@
 					}
 
 					if (role == "Credit Committee") {
-						this.$router.push("/credit_committeess");
+						this.$router.push("/credit_committee");
 					}
 				}
 			} catch (error) {
